@@ -1,6 +1,8 @@
 # lyrics-generator
 
-## example
+
+Some examples of lstm-512-4 evaluation 
+```
 ja sam preboleo
 srecna nije samo jedan stan
 kad se nisam ne znam
@@ -30,3 +32,4 @@ necu znam ti sad mi se vole
 nije vise kada ne vrata
 pogledaj sam ti da me sada stida
 sve sto ti nesto divno starimo stara
+```
