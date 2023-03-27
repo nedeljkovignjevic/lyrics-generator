@@ -1,7 +1,5 @@
 from src.dataset_generation import SongDatasetGenerator
-from src.preprocessing import (
-    ToLowercaseOp, FilterLinesOp, NewLinePadderOp
-)
+from src.preprocessing import ToLowercaseOp, TokenizerOp
 
 
 def generate_dataset():
@@ -9,7 +7,7 @@ def generate_dataset():
         output_dir_path='data/raw/singers',
         num_singers=8,
         num_processes=32,
-        preprocessing_ops=[ToLowercaseOp(), FilterLinesOp(["ref.", "("]), NewLinePadderOp()]
+        preprocessing_ops=[ToLowercaseOp(), TokenizerOp(["ref.", "("])]
     )
     generator.generate_dataset()
 
@@ -42,11 +40,6 @@ def generate_dataset():
 #     print(output)
 
 if __name__ == '__main__':
-    # TODO(dusanerdeljan): Implement preprocessing OP for adding special tokens such as START_OF_VERSE and END_OF_VERSE.
-    #  Also, revisit the current preprocessing ops - are they implemented properly and are they necessary?
-
-    # TODO(dusanerdeljan): Implement some sort of logger for dataset generation so we know where we are.
-
     # TODO(dusanerdeljan): Implement PyTorch dataset which would read the raw singers data and stream all the data to
     #  model.
 
