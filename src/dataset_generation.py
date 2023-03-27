@@ -72,12 +72,20 @@ class SingerScraperWorker:
             return
 
         singer_name = songs_page.singer_name()
-        singer_output_file = os.path.join(self._output_dir, f"{singer_name}_{self._singer_id}.txt")
+        singer_output_dir = os.path.join(self._output_dir, f"{singer_name}_{self._singer_id}")
 
-        with open(singer_output_file, 'w', encoding='utf-8') as singer_file:
-            for song in songs_page.parse_songs():
-                song = self.preprocess_song(song)
+        # Optimization for the case where we have already scraped songs for this singer.
+        if os.path.exists(singer_output_dir):
+            print(f"Found data for singer {singer_name}. Skipping...")
+            return
+        os.makedirs(singer_output_dir)
+
+        for song_idx, song in enumerate(songs_page.parse_songs()):
+            song = self.preprocess_song(song)
+            singer_output_file = os.path.join(singer_output_dir, f"{song_idx}.txt")
+            with open(singer_output_file, 'w', encoding='utf-8') as singer_file:
                 singer_file.write(song)
+            print(f"Processed song {song_idx + 1} from singer {singer_name}.")
 
 
 class SongDatasetGenerator:
